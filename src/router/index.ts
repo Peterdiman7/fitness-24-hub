@@ -14,8 +14,9 @@ import NutritionDetailsView from "@/views/NutritionDetailsView.vue"
 import ContactsView from "@/views/ContactsView.vue"
 import PrivacyPolicyView from "@/views/PrivacyPolicyView.vue"
 import TermsConditionsView from "@/views/TermsConditionsView.vue"
+import RegisterView from "@/views/RegisterView.vue"
 
-export const rootRoute: RouteLocationNamedRaw = { name: "landing" }
+export const rootRoute: RouteLocationNamedRaw = { name: "home" }
 
 const createRouter = () => {
     const router = createVueRouter({
@@ -23,7 +24,7 @@ const createRouter = () => {
         routes: [
             {
                 path: "/",
-                name: "landing",
+                name: "home",
                 component: LandingPageView,
             },
             {
@@ -40,7 +41,7 @@ const createRouter = () => {
                 path: "/workouts/:workoutId",
                 name: "workout-details",
                 component: WorkoutDetailsView,
-                meta: { requiresAuth: true }
+                meta: { requiresAuth: true },
             },
             {
                 path: "/nutrition",
@@ -51,7 +52,7 @@ const createRouter = () => {
                 path: "/nutrition/:id",
                 name: "nutrition-details",
                 component: NutritionDetailsView,
-                meta: { requiresAuth: true }
+                meta: { requiresAuth: true },
             },
             {
                 path: "/articles",
@@ -62,12 +63,19 @@ const createRouter = () => {
                 path: "/articles/:articleId",
                 name: "article-details",
                 component: ArticleDetailsView,
-                meta: { requiresAuth: true }
+                meta: { requiresAuth: true },
             },
             {
                 path: "/login",
                 name: "login",
                 component: LoginView,
+                meta: { requiresGuest: true },
+            },
+            {
+                path: "/register",
+                name: "register",
+                component: RegisterView,
+                meta: { requiresGuest: true },
             },
             {
                 path: "/contacts",
@@ -87,11 +95,28 @@ const createRouter = () => {
         ],
     })
 
-    router.beforeEach((to, _from, next) => {
-        const loggedIn = sessionStorage.getItem("loggedIn") === "true"
+    // Global route guard
+    router.beforeEach(async (to, _from, next) => {
         const requiresAuth = to.matched.some(record => (record.meta as any)?.requiresAuth === true)
+        const requiresGuest = to.matched.some(record => (record.meta as any)?.requiresGuest === true)
+
+        let loggedIn = false
+
+        try {
+            const res = await fetch("http://localhost:3000/auth/me", {
+                credentials: "include"
+            })
+            loggedIn = res.ok
+        } catch (err) {
+            loggedIn = false
+        }
+
         if (requiresAuth && !loggedIn) {
+            // Not logged in → redirect to login
             next({ name: "login" })
+        } else if (requiresGuest && loggedIn) {
+            // Logged in → redirect to home
+            next({ name: "home" })
         } else {
             next()
         }

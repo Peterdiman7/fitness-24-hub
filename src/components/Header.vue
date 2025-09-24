@@ -59,12 +59,16 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onBeforeUnmount } from "vue"
+import { ref, onMounted } from "vue"
 import { useRouter } from "vue-router"
+import { useAuthStore } from "@/stores/auth"
+import { storeToRefs } from "pinia"
 
 const router = useRouter()
+const auth = useAuthStore()
+const { loggedIn } = storeToRefs(auth)
+
 const menuOpen = ref(false)
-const loggedIn = ref(sessionStorage.getItem("loggedIn") === "true")
 
 const toggleMenu = () => {
   menuOpen.value = !menuOpen.value
@@ -76,40 +80,25 @@ const closeMenu = () => {
   document.body.style.overflow = ""
 }
 
-const handleResize = () => {
-  if (window.innerWidth > 768) closeMenu()
-}
-
-onMounted(() => {
-  window.addEventListener("resize", handleResize)
-  window.addEventListener("storage", syncLoginState)
-})
-
-onBeforeUnmount(() => {
-  window.removeEventListener("resize", handleResize)
-  window.removeEventListener("storage", syncLoginState)
-})
-
-const logout = () => {
-  sessionStorage.removeItem("loggedIn")
-  loggedIn.value = false
+const logout = async () => {
+  await auth.logout()
   router.push("/login")
 }
 
-const syncLoginState = () => {
-  loggedIn.value = sessionStorage.getItem("loggedIn") === "true"
-}
+onMounted(() => {
+  auth.checkLogin() // initial check from backend
+})
 </script>
 
 <style scoped>
 .site-header {
   width: 100%;
-  background: #1e3a8a; /* dark blue */
+  background: #1e3a8a;
   padding: 1rem 2rem;
   position: sticky;
   top: 0;
   z-index: 200;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .nav {
@@ -162,7 +151,7 @@ const syncLoginState = () => {
 
 .nav-link:hover,
 .nav-link.router-link-active {
-  background: rgba(255,255,255,0.2);
+  background: rgba(255, 255, 255, 0.2);
   color: white;
 }
 
@@ -187,7 +176,8 @@ const syncLoginState = () => {
   display: block;
   height: 3px;
   width: 100%;
-  background: white; /* always visible */
+  background: white;
+  /* always visible */
   border-radius: 2px;
   transition: all 0.3s ease;
 }
@@ -206,14 +196,18 @@ const syncLoginState = () => {
 
 /* Mobile */
 @media (max-width: 1078px) {
-  .menu-toggle { display: flex; }
+  .menu-toggle {
+    display: flex;
+  }
+
   .nav-links {
     position: fixed;
     top: 0;
     right: 0;
     flex-direction: column;
     align-items: flex-start;
-    background: #1e3a8a; /* dark blue */
+    background: #1e3a8a;
+    /* dark blue */
     width: 80%;
     max-width: 320px;
     height: 100vh;
@@ -221,13 +215,31 @@ const syncLoginState = () => {
     transform: translateX(100%);
     transition: transform 0.3s ease;
   }
-  .nav-links.open { transform: translateX(0); }
-  .nav-links li { width: 100%; }
-  .nav-link { width: 100%; justify-content: flex-start; padding: 1rem 1.2rem; border-radius: 6px; }
+
+  .nav-links.open {
+    transform: translateX(0);
+  }
+
+  .nav-links li {
+    width: 100%;
+  }
+
+  .nav-link {
+    width: 100%;
+    justify-content: flex-start;
+    padding: 1rem 1.2rem;
+    border-radius: 6px;
+  }
 }
 
 @media (max-width: 480px) {
-  .logo-text { display: none; }
-  .nav-links { width: 100%; max-width: none; }
+  .logo-text {
+    display: none;
+  }
+
+  .nav-links {
+    width: 100%;
+    max-width: none;
+  }
 }
 </style>
