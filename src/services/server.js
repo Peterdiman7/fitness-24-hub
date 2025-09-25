@@ -12,9 +12,10 @@ const app = express()
 
 // ---- MIDDLEWARE ----
 app.use(cors({
-    origin: "http://localhost:5173",
+    origin: ["http://localhost:9002", "http://localhost:5173"],
     credentials: true
 }))
+
 app.use(express.json())
 app.use(cookieParser())
 
@@ -22,7 +23,7 @@ app.use(cookieParser())
 const conn = await mysql.createConnection({
     host: process.env.DB_HOST || "127.0.0.1",
     user: process.env.DB_USER || "fitness24hub",
-    port: Number(process.env.DB_PORT) || 3307,
+    port: Number(process.env.DB_PORT) || 3306,
     password: process.env.DB_PASS || "sPP442dR__F",
     database: process.env.DB_NAME || "fitness24hub"
 })
@@ -90,9 +91,9 @@ app.post("/auth/login", async (req, res) => {
         // Set token as HttpOnly cookie
         res.cookie("token", token, {
             httpOnly: true,
-            secure: false,      // set true if using HTTPS
-            sameSite: "lax",
-            maxAge: 2 * 60 * 60 * 1000 // 2 hours
+            secure: true,
+            sameSite: "none",
+            maxAge: 2 * 60 * 60 * 1000
         })
 
         res.json({ message: "Login successful" })
@@ -122,6 +123,6 @@ app.post("/auth/logout", (req, res) => {
 })
 
 // ---- START SERVER ----
-app.listen(3000, () => {
-    console.log("API running on http://localhost:3000")
+app.listen(9102, () => {
+    console.log("API running on http://localhost:9102")
 })
