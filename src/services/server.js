@@ -10,9 +10,21 @@ dotenv.config()
 
 const app = express()
 
-// ---- MIDDLEWARE ----
+// CORS configuration
+const allowedOrigins = [
+    "https://fitness24hub.com",
+    "http://localhost:9002",
+    "http://localhost:5173"
+]
+
 app.use(cors({
-    origin: ["http://localhost:9002", "http://localhost:5173"],
+    origin: function (origin, callback) {
+        if (!origin || allowedOrigins.includes(origin)) {
+            callback(null, origin)
+        } else {
+            callback(new Error("Not allowed by CORS"))
+        }
+    },
     credentials: true
 }))
 
@@ -21,11 +33,11 @@ app.use(cookieParser())
 
 // ---- MYSQL CONNECTION ----
 const conn = await mysql.createConnection({
-    host: process.env.DB_HOST || "127.0.0.1",
-    user: process.env.DB_USER || "fitness24hub",
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
     port: Number(process.env.DB_PORT) || 3306,
-    password: process.env.DB_PASS || "sPP442dR__F",
-    database: process.env.DB_NAME || "fitness24hub"
+    password: process.env.DB_PASS,
+    database: process.env.DB_NAME
 })
 
 // ---- JWT SECRET ----
@@ -91,9 +103,9 @@ app.post("/auth/login", async (req, res) => {
         // Set token as HttpOnly cookie
         res.cookie("token", token, {
             httpOnly: true,
-            secure: true,
-            sameSite: "none",
-            maxAge: 2 * 60 * 60 * 1000
+            secure: false,      // set true if using HTTPS
+            sameSite: "lax",
+            maxAge: 2 * 60 * 60 * 1000 // 2 hours
         })
 
         res.json({ message: "Login successful" })

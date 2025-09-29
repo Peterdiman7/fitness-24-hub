@@ -15,6 +15,7 @@ import ContactsView from "@/views/ContactsView.vue"
 import PrivacyPolicyView from "@/views/PrivacyPolicyView.vue"
 import TermsConditionsView from "@/views/TermsConditionsView.vue"
 import RegisterView from "@/views/RegisterView.vue"
+import CancelSubscriptionView from "@/views/CancelSubscriptionView.vue"
 
 export const rootRoute: RouteLocationNamedRaw = { name: "home" }
 
@@ -88,6 +89,12 @@ const createRouter = () => {
                 component: PrivacyPolicyView,
             },
             {
+                path: "/cancel-subscription",
+                name: "cancel-subscription",
+                component: CancelSubscriptionView,
+                meta: { requiresAuth: true },
+            },
+            {
                 path: "/terms-conditions",
                 name: "terms-conditions",
                 component: TermsConditionsView,
@@ -103,7 +110,7 @@ const createRouter = () => {
         let loggedIn = false
 
         try {
-            const res = await fetch("http://localhost:9102/auth/me", {
+            const res = await fetch("https://back.fitness24hub.com/auth/me", {
                 credentials: "include"
             })
             loggedIn = res.ok

@@ -31,6 +31,7 @@
         <h4>Support</h4>
         <ul>
           <li><a href="#" @click="navigate('contacts')">Contact Us</a></li>
+          <li><a href="#" @click="navigate('cancel-subscription')">Cancel Subscription</a></li>
         </ul>
       </div>
 
@@ -96,27 +97,12 @@ function subscribeNewsletter() {
   }
 }
 
-function openTerms() {
-  showTermsModal.value = true
-}
 function closeModal() {
   showTermsModal.value = false
 }
 
-function openPrivacy() {
-  alert('Privacy Policy: Your data is secured. This is a demo app.')
-}
 function openDisclaimer() {
   alert('Medical Disclaimer: Content is educational only. Consult professionals for medical advice.')
-}
-function openContact() {
-  alert('Contact: hello@fitness24hub.com or call 1-800-FIT-HUB')
-}
-function openFAQ() {
-  alert('FAQ: Find answers about workouts, nutrition, and subscription plans.')
-}
-function openFeedback() {
-  alert('Send Feedback: Suggest improvements at feedback@fitness24hub.com')
 }
 
 const navigate = (name: string) => {
