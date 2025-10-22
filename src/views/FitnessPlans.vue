@@ -20,6 +20,10 @@
 <script setup lang="ts">
 import { ref } from "vue"
 
+import { useRouter } from "vue-router"
+
+const router = useRouter()
+
 interface Plan {
   id: number
   name: string
@@ -75,7 +79,7 @@ const plans = ref<Plan[]>([
 ])
 
 const selectPlan = (plan: Plan) => {
-  alert(`You selected the ${plan.name} plan!`)
+  router.push({ name: "checkout", query: { plan: plan.id } })
 }
 </script>
 

@@ -3,7 +3,6 @@
     <div class="footer-content">
       <div class="footer-section brand-section">
         <div class="brand">
-          <span class="icon">💪</span>
           <span class="name">Fitness24Hub</span>
         </div>
         <p class="tagline">Your daily dose of workouts and nutrition guidance</p>
@@ -49,7 +48,7 @@
         <p>Get weekly fitness tips, workouts, and nutrition advice</p>
         <form class="newsletter-form" @submit.prevent="subscribeNewsletter">
           <input type="email" placeholder="Enter your email" v-model="email" required />
-          <button type="submit">🌟 Subscribe</button>
+          <button type="submit">Subscribe</button>
         </form>
       </div>
     </div>

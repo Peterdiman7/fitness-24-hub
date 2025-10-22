@@ -16,6 +16,7 @@ import PrivacyPolicyView from "@/views/PrivacyPolicyView.vue"
 import TermsConditionsView from "@/views/TermsConditionsView.vue"
 import RegisterView from "@/views/RegisterView.vue"
 import CancelSubscriptionView from "@/views/CancelSubscriptionView.vue"
+import CheckoutView from "@/views/CheckoutView.vue"
 
 export const rootRoute: RouteLocationNamedRaw = { name: "home" }
 
@@ -87,6 +88,12 @@ const createRouter = () => {
                 path: "/privacy-policy",
                 name: "privacy-policy",
                 component: PrivacyPolicyView,
+            },
+            {
+                path: "/checkout",
+                name: "checkout",
+                component: CheckoutView,
+                meta: { requiresAuth: true },
             },
             {
                 path: "/cancel-subscription",
