@@ -3,7 +3,7 @@
     <div class="footer-content">
       <div class="footer-section brand-section">
         <div class="brand">
-          <span class="icon">💪</span>
+          <img src="@/assets/images/fitness-24-hub-logo.png" alt="Fitness24Hub Logo" class="footer-logo" />
           <span class="name">Fitness24Hub</span>
         </div>
         <p class="tagline">Your daily dose of workouts and nutrition guidance</p>
@@ -31,6 +31,7 @@
         <h4>Support</h4>
         <ul>
           <li><a href="#" @click="navigate('contacts')">Contact Us</a></li>
+          <li><a href="#" @click="navigate('cancel-subscription')">Cancel Subscription</a></li>
         </ul>
       </div>
 
@@ -48,7 +49,7 @@
         <p>Get weekly fitness tips, workouts, and nutrition advice</p>
         <form class="newsletter-form" @submit.prevent="subscribeNewsletter">
           <input type="email" placeholder="Enter your email" v-model="email" required />
-          <button type="submit">🌟 Subscribe</button>
+          <button type="submit">Subscribe</button>
         </form>
       </div>
     </div>
@@ -96,27 +97,12 @@ function subscribeNewsletter() {
   }
 }
 
-function openTerms() {
-  showTermsModal.value = true
-}
 function closeModal() {
   showTermsModal.value = false
 }
 
-function openPrivacy() {
-  alert('Privacy Policy: Your data is secured. This is a demo app.')
-}
 function openDisclaimer() {
   alert('Medical Disclaimer: Content is educational only. Consult professionals for medical advice.')
-}
-function openContact() {
-  alert('Contact: hello@fitness24hub.com or call 1-800-FIT-HUB')
-}
-function openFAQ() {
-  alert('FAQ: Find answers about workouts, nutrition, and subscription plans.')
-}
-function openFeedback() {
-  alert('Send Feedback: Suggest improvements at feedback@fitness24hub.com')
 }
 
 const navigate = (name: string) => {
@@ -304,6 +290,26 @@ const navigate = (name: string) => {
 
   .modal-content {
     padding: 1rem;
+  }
+}
+
+.footer-logo {
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+  margin-right: 0.5rem;
+  animation: floatFooterLogo 4s ease-in-out infinite;
+}
+
+@keyframes floatFooterLogo {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-5px);
   }
 }
 </style>

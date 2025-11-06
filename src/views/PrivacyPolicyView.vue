@@ -13,8 +13,8 @@
                     fairly and transparently.
                 </p>
                 <p>
-                    Email: <a href="mailto:privacy@fitness24hub.com">privacy@fitness24hub.com</a><br />
-                    Support: <a href="mailto:support@fitness24hub.com">support@fitness24hub.com</a><br />
+                    Email: <a href="mailto:info@fitness24hub.com">info@fitness24hub.com</a><br />
+                    Support: <a href="mailto:help@fitness24hub.com">help@fitness24hub.com</a><br />
                     Phone: +1-747-250-0014
                 </p>
 
@@ -103,7 +103,7 @@
                 <h3>10) Contact Us</h3>
                 <p>
                     For privacy-related questions, requests, or complaints, please contact us:
-                    <a href="mailto:privacy@fitness24hub.com">privacy@fitness24hub.com</a>
+                    <a href="mailto:help@fitness24hub.com">help@fitness24hub.com</a>
                 </p>
             </div>
         </div>

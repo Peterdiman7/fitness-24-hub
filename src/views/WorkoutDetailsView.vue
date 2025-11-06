@@ -1,33 +1,46 @@
 <template>
-  <div class="workout-detail container">
-    <div class="workout-card">
+  <div class="workout-detail container" v-if="workout">
+    <div class="workout-header">
       <h1>{{ workout.title }}</h1>
-      <p class="description">{{ workout.description }}</p>
+      <p>{{ workout.description }}</p>
+      <img :src="workout.image_url" class="header-img" />
 
-      <h2>Steps</h2>
-      <ul class="steps">
+      <div class="meta">
+        <span><strong>Duration:</strong> {{ workout.duration }} mins</span>
+        <span><strong>Level:</strong> {{ workout.level }}</span>
+      </div>
+    </div>
+
+    <div class="steps-container">
+      <h2>How to Perform</h2>
+      <ul>
         <li v-for="(step, index) in workout.steps" :key="index">
-          <span class="step-number">{{ index + 1 }}</span>
-          <span class="step-text">{{ step }}</span>
+          <span class="step-number">{{ step.step_number }}</span>
+          <span class="step-text">{{ step.instruction }}</span>
         </li>
       </ul>
     </div>
   </div>
 </template>
 
+
 <script setup lang="ts">
-import { useRoute } from 'vue-router'
-import { ref, computed } from 'vue'
+import { useRoute } from "vue-router"
+import { ref, onMounted } from "vue"
 
 const route = useRoute()
+const workout = ref<any>(null)
 
-const workouts = [
-  { id: 1, title: "Full Body Strength", description: "Build total body strength in 30 minutes.", steps: ["Warm up 5 min", "Push-ups 3x10", "Squats 3x15", "Cool down 5 min"] },
-  { id: 2, title: "Cardio Burn", description: "High-intensity cardio to torch calories.", steps: ["Jumping jacks 3x30", "Burpees 3x10", "Sprints 5x1min"] },
-  { id: 3, title: "Yoga Stretch", description: "Flexibility and relaxation workout.", steps: ["Sun Salutation", "Downward Dog", "Seated Forward Bend"] },
-]
+const fetchWorkout = async () => {
+  try {
+    const res = await fetch(`http://localhost:9102/workouts/${route.params.workoutId}`)
+    workout.value = await res.json()
+  } catch (err) {
+    console.error("FETCH WORKOUT ERROR:", err)
+  }
+}
 
-const workout = computed(() => workouts.find(w => w.id === Number(route.params.workoutId)) ?? workouts[0])
+onMounted(fetchWorkout)
 </script>
 
 <style scoped>
@@ -37,34 +50,40 @@ const workout = computed(() => workouts.find(w => w.id === Number(route.params.w
   display: flex;
   justify-content: center;
 }
+
 .workout-card {
   background: #ffffff;
   border-radius: 20px;
   padding: 2.5rem 3rem;
   max-width: 700px;
   width: 100%;
-  box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
+
 .workout-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
 }
+
 .workout-card h1 {
   font-size: 2rem;
   color: #007c91;
   margin-bottom: 0.5rem;
 }
+
 .description {
   font-size: 1.1rem;
   margin-bottom: 2rem;
   color: #555;
   line-height: 1.6;
 }
+
 .steps {
   list-style: none;
   padding: 0;
 }
+
 .steps li {
   display: flex;
   align-items: center;
@@ -74,9 +93,11 @@ const workout = computed(() => workouts.find(w => w.id === Number(route.params.w
   padding: 0.8rem 1rem;
   transition: transform 0.2s ease;
 }
+
 .steps li:hover {
   transform: translateX(5px);
 }
+
 .step-number {
   background: #00acc1;
   color: white;
@@ -89,6 +110,7 @@ const workout = computed(() => workouts.find(w => w.id === Number(route.params.w
   justify-content: center;
   margin-right: 1rem;
 }
+
 .step-text {
   font-size: 1rem;
   color: #333;
@@ -99,6 +121,7 @@ const workout = computed(() => workouts.find(w => w.id === Number(route.params.w
   .workout-card {
     padding: 2rem 1.5rem;
   }
+
   .workout-card h1 {
     font-size: 1.7rem;
   }

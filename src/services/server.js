@@ -10,21 +10,44 @@ dotenv.config()
 
 const app = express()
 
-// ---- MIDDLEWARE ----
+// ---- CORS configuration ----
 app.use(cors({
-    origin: "http://localhost:5173",
-    credentials: true
+    origin: function (origin, callback) {
+        if (!origin) return callback(null, true)
+
+        const allowedOrigins = [
+            "https://fitness24hub.com",
+            "https://su.fitness24hub.com",
+            "https://ku.fitness24hub.com",
+            "https://ksa.fitness24hub.com",
+            "https://iq.fitness24hub.com",
+            "http://localhost:9002",
+            "http://localhost:5173"
+        ]
+
+        if (allowedOrigins.includes(origin)) {
+            return callback(null, true)
+        }
+
+        callback(new Error("Not allowed by CORS: " + origin))
+    },
+    credentials: true,
+    optionsSuccessStatus: 204
 }))
+
 app.use(express.json())
 app.use(cookieParser())
 
-// ---- MYSQL CONNECTION ----
-const conn = await mysql.createConnection({
-    host: process.env.DB_HOST || "127.0.0.1",
-    user: process.env.DB_USER || "fitness24hub",
+// ---- MYSQL POOL ----
+const pool = mysql.createPool({
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
     port: Number(process.env.DB_PORT) || 3307,
-    password: process.env.DB_PASS || "sPP442dR__F",
-    database: process.env.DB_NAME || "fitness24hub"
+    password: process.env.DB_PASS,
+    database: process.env.DB_NAME,
+    waitForConnections: true,
+    connectionLimit: 10,
+    queueLimit: 0
 })
 
 // ---- JWT SECRET ----
@@ -33,6 +56,42 @@ if (!JWT_SECRET) {
     console.error("Missing JWT_SECRET in .env")
     process.exit(1)
 }
+
+// ---- GET CATEGORIES ----
+app.get("/categories", async (req, res) => {
+    try {
+        const [rows] = await pool.execute(
+            "SELECT id, name, slug, description, image_url FROM categories ORDER BY id ASC"
+        )
+        res.json(rows)
+    } catch (err) {
+        console.error("GET CATEGORIES ERROR:", err)
+        res.status(500).json({ error: "Database error" })
+    }
+})
+
+app.get("/workouts/:id", async (req, res) => {
+    try {
+        const [[workout]] = await pool.execute(
+            "SELECT * FROM workouts WHERE id = ?",
+            [req.params.id]
+        );
+
+        if (!workout) return res.status(404).json({ error: "Not found" });
+
+        const [steps] = await pool.execute(
+            "SELECT step_number, text FROM workout_instructions WHERE workout_id = ? ORDER BY step_number",
+            [req.params.id]
+        );
+
+        workout.steps = steps;
+        res.json(workout);
+
+    } catch (err) {
+        console.error("GET WORKOUT ERROR:", err);
+        res.status(500).json({ error: "Server error" });
+    }
+})
 
 // ---- REGISTER USER ----
 app.post("/auth/register", async (req, res) => {
@@ -44,7 +103,7 @@ app.post("/auth/register", async (req, res) => {
 
     try {
         const hashedPassword = await bcrypt.hash(password, 10)
-        await conn.execute(
+        await pool.execute(
             "INSERT INTO users (username, email, password) VALUES (?, ?, ?)",
             [username, email, hashedPassword]
         )
@@ -60,12 +119,12 @@ app.post("/auth/register", async (req, res) => {
     }
 })
 
-// ---- LOGIN USER (sets JWT cookie) ----
+// ---- LOGIN USER ----
 app.post("/auth/login", async (req, res) => {
     const { username, password } = req.body
 
     try {
-        const [rows] = await conn.execute(
+        const [rows] = await pool.execute(
             "SELECT * FROM users WHERE username = ?",
             [username]
         )
@@ -87,12 +146,11 @@ app.post("/auth/login", async (req, res) => {
             { expiresIn: "2h" }
         )
 
-        // Set token as HttpOnly cookie
         res.cookie("token", token, {
             httpOnly: true,
-            secure: false,      // set true if using HTTPS
+            secure: false, // set to true if using HTTPS
             sameSite: "lax",
-            maxAge: 2 * 60 * 60 * 1000 // 2 hours
+            maxAge: 2 * 60 * 60 * 1000
         })
 
         res.json({ message: "Login successful" })
@@ -110,7 +168,7 @@ app.get("/auth/me", (req, res) => {
     try {
         const decoded = jwt.verify(token, JWT_SECRET)
         res.json(decoded)
-    } catch (err) {
+    } catch {
         res.status(401).json({ error: "Invalid or expired token" })
     }
 })
@@ -122,6 +180,6 @@ app.post("/auth/logout", (req, res) => {
 })
 
 // ---- START SERVER ----
-app.listen(3000, () => {
-    console.log("API running on http://localhost:3000")
+app.listen(9102, () => {
+    console.log("API running on http://localhost:9102")
 })

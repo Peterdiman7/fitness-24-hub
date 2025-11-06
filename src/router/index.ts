@@ -15,6 +15,8 @@ import ContactsView from "@/views/ContactsView.vue"
 import PrivacyPolicyView from "@/views/PrivacyPolicyView.vue"
 import TermsConditionsView from "@/views/TermsConditionsView.vue"
 import RegisterView from "@/views/RegisterView.vue"
+import CancelSubscriptionView from "@/views/CancelSubscriptionView.vue"
+import CheckoutView from "@/views/CheckoutView.vue"
 
 export const rootRoute: RouteLocationNamedRaw = { name: "home" }
 
@@ -41,7 +43,7 @@ const createRouter = () => {
                 path: "/workouts/:workoutId",
                 name: "workout-details",
                 component: WorkoutDetailsView,
-                meta: { requiresAuth: true },
+                // meta: { requiresAuth: true },
             },
             {
                 path: "/nutrition",
@@ -52,7 +54,7 @@ const createRouter = () => {
                 path: "/nutrition/:id",
                 name: "nutrition-details",
                 component: NutritionDetailsView,
-                meta: { requiresAuth: true },
+                // meta: { requiresAuth: true },
             },
             {
                 path: "/articles",
@@ -63,7 +65,7 @@ const createRouter = () => {
                 path: "/articles/:articleId",
                 name: "article-details",
                 component: ArticleDetailsView,
-                meta: { requiresAuth: true },
+                // meta: { requiresAuth: true },
             },
             {
                 path: "/login",
@@ -88,6 +90,18 @@ const createRouter = () => {
                 component: PrivacyPolicyView,
             },
             {
+                path: "/checkout",
+                name: "checkout",
+                component: CheckoutView,
+                meta: { requiresAuth: true },
+            },
+            {
+                path: "/cancel-subscription",
+                name: "cancel-subscription",
+                component: CancelSubscriptionView,
+                meta: { requiresAuth: true },
+            },
+            {
                 path: "/terms-conditions",
                 name: "terms-conditions",
                 component: TermsConditionsView,
@@ -103,7 +117,7 @@ const createRouter = () => {
         let loggedIn = false
 
         try {
-            const res = await fetch("http://localhost:3000/auth/me", {
+            const res = await fetch("https://back.fitness24hub.com/auth/me", {
                 credentials: "include"
             })
             loggedIn = res.ok

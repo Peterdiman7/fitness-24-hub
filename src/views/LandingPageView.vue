@@ -3,252 +3,567 @@
     <!-- Hero Section -->
     <section class="hero">
       <div class="hero-content">
-        <h1>Your Fitness Journey Starts Here 💪</h1>
-        <p>
-          Discover workout plans, nutrition tips, and progress tracking tools to stay fit and healthy.
-          Take the first step towards your personal best.
+        <div class="hero-badge">Your Fitness Partner</div>
+        <h1 class="hero-title">
+          Transform Your Body,<br />
+          <span class="gradient-text">Elevate Your Life</span>
+        </h1>
+        <p class="hero-description">
+          Discover science-backed workout plans, expert nutrition guidance, and progress tracking tools
+          designed to help you achieve your fitness goals.
         </p>
-        <div class="actions">
-          <RouterLink to="/fitness-plans" class="btn primary">Start Training</RouterLink>
-          <RouterLink to="/workouts" class="btn secondary">Explore Workouts</RouterLink>
+        <div class="hero-actions">
+          <RouterLink to="/fitness-plans" class="btn btn-primary btn-lg">
+            Get Started
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+              <path d="M7.5 15l5-5-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+            </svg>
+          </RouterLink>
+          <RouterLink to="/workouts" class="btn btn-outline btn-lg">Explore Workouts</RouterLink>
+        </div>
+        <div class="hero-stats">
+          <div class="stat">
+            <div class="stat-value">10k+</div>
+            <div class="stat-label">Active Members</div>
+          </div>
+          <div class="stat">
+            <div class="stat-value">500+</div>
+            <div class="stat-label">Workout Plans</div>
+          </div>
+          <div class="stat">
+            <div class="stat-value">95%</div>
+            <div class="stat-label">Satisfaction Rate</div>
+          </div>
         </div>
       </div>
-      <div class="hero-image">
-        <div class="floating-elements">
-          <div class="element element-1">🏋️‍♂️</div>
-          <div class="element element-2">🥗</div>
-          <div class="element element-3">💪</div>
-          <div class="element element-4">🏃‍♀️</div>
+      <div class="hero-visual">
+        <div class="visual-card card-1">
+          <div class="card-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
+            </svg>
+          </div>
+          <div class="card-text">
+            <div class="card-title">Heart Rate</div>
+            <div class="card-value">142 bpm</div>
+          </div>
+        </div>
+        <div class="visual-card card-2">
+          <div class="card-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M18 20V10M12 20V4M6 20v-6" />
+            </svg>
+          </div>
+          <div class="card-text">
+            <div class="card-title">Progress</div>
+            <div class="card-value">+24%</div>
+          </div>
         </div>
       </div>
     </section>
 
     <!-- Features Section -->
     <section class="features">
-      <div class="container">
-        <h2>Why Choose FitWave?</h2>
-        <div class="features-grid">
-          <div class="feature-card">
-            <div class="feature-icon">📚</div>
-            <h3>Expert Workouts</h3>
-            <p>Workout routines designed by certified personal trainers and fitness coaches</p>
+      <div class="section-header">
+        <h2>Everything You Need to Succeed</h2>
+        <p>Comprehensive tools and resources to support your fitness journey</p>
+      </div>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" />
+              <path d="M14 2v6h6M16 13H8M16 17H8M10 9H8" />
+            </svg>
           </div>
-          <div class="feature-card">
-            <div class="feature-icon">🥗</div>
-            <h3>Nutrition Guidance</h3>
-            <p>Track your meals and follow expert nutrition tips to fuel your workouts</p>
+          <h3>Expert Workouts</h3>
+          <p>Professionally designed routines by certified trainers for all fitness levels</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="8" r="7" />
+              <path d="M8.21 13.89L7 23l5-3 5 3-1.21-9.11" />
+            </svg>
           </div>
-          <div class="feature-card">
-            <div class="feature-icon">📱</div>
-            <h3>Train Anywhere</h3>
-            <p>Follow workouts on any device with offline access for on-the-go fitness</p>
+          <h3>Nutrition Guidance</h3>
+          <p>Science-based meal plans and nutritional advice to fuel your workouts</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6" />
+            </svg>
           </div>
-          <div class="feature-card">
-            <div class="feature-icon">👥</div>
-            <h3>Fitness Community</h3>
-            <p>Join a supportive network of fitness enthusiasts sharing progress and tips</p>
+          <h3>Progress Tracking</h3>
+          <p>Monitor your achievements and stay motivated with detailed analytics</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />
+              <circle cx="9" cy="7" r="4" />
+              <path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" />
+            </svg>
           </div>
+          <h3>Community Support</h3>
+          <p>Join thousands of members sharing tips, motivation, and success stories</p>
         </div>
       </div>
     </section>
 
-    <!-- Testimonial / Stats Section -->
-    <section class="stats">
-      <div class="container">
-        <h2>Real Results, Real People</h2>
-        <div class="stats-grid">
-          <div class="stat-card">
-            <h3>10k+</h3>
-            <p>Active Users</p>
+    <!-- Social Proof -->
+    <section class="testimonials">
+      <div class="section-header">
+        <h2>Trusted by Thousands</h2>
+        <p>Real results from real people</p>
+      </div>
+      <div class="testimonials-grid">
+        <div class="testimonial-card">
+          <div class="testimonial-rating">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+            </svg>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+            </svg>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+            </svg>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+            </svg>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+            </svg>
           </div>
-          <div class="stat-card">
-            <h3>500+</h3>
-            <p>Workout Plans</p>
-          </div>
-          <div class="stat-card">
-            <h3>95%</h3>
-            <p>User Satisfaction</p>
+          <p class="testimonial-text">"The workout plans are incredibly well-structured. I've seen amazing results in
+            just 3 months!"</p>
+          <div class="testimonial-author">
+            <div class="author-avatar">JD</div>
+            <div class="author-info">
+              <div class="author-name">Jessica Davis</div>
+              <div class="author-role">Member since 2024</div>
+            </div>
           </div>
         </div>
+        <!-- Additional testimonial cards... -->
       </div>
     </section>
 
-    <!-- Call to Action Section -->
+    <!-- CTA Section -->
     <section class="cta">
-      <div class="container">
-        <h2>Ready to Transform Your Body?</h2>
-        <p>Join thousands reaching their fitness goals with evidence-based routines</p>
-        <RouterLink to="/fitness-plans" class="btn primary large">Start Free Trial</RouterLink>
+      <div class="cta-content">
+        <h2>Ready to Start Your Transformation?</h2>
+        <p>Join thousands of members achieving their fitness goals with our expert-guided programs</p>
+        <RouterLink to="/fitness-plans" class="btn btn-primary btn-lg">
+          View Plans
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <path d="M7.5 15l5-5-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+          </svg>
+        </RouterLink>
       </div>
     </section>
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { RouterLink } from 'vue-router'
 </script>
 
 <style scoped>
-/* Landing Page Background */
 .landing-page {
-  font-family: 'Poppins', sans-serif;
-  background: linear-gradient(135deg, #e0f7fa, #80deea, #26c6da);
-  color: #333;
+  font-family: 'Inter', sans-serif;
 }
 
-/* Hero Section */
+/* ---------------- Hero Section ---------------- */
 .hero {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
   align-items: center;
-  padding: 4rem 2rem;
-  gap: 2rem;
-}
-.hero-content h1 {
-  font-size: 2.8rem;
-  font-weight: 700;
-  margin-bottom: 1rem;
-}
-.hero-content p {
-  font-size: 1.2rem;
-  margin-bottom: 2rem;
-  line-height: 1.6;
-}
-.actions .btn {
-  margin-right: 1rem;
-  transition: all 0.3s ease;
-}
-.actions .btn:hover {
-  transform: translateY(-3px);
+  padding: 6rem 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
 }
 
-/* Floating Elements */
-.floating-elements {
+.hero-badge {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  background: var(--gray-100);
+  color: var(--primary);
+  border-radius: var(--radius-full);
+  font-size: 0.875rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+}
+
+.hero-title {
+  font-size: 3.5rem;
+  line-height: 1.1;
+  margin-bottom: 1.5rem;
+  font-weight: 800;
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero-description {
+  font-size: 1.125rem;
+  color: var(--gray-600);
+  margin-bottom: 2rem;
+  line-height: 1.7;
+  max-width: 540px;
+}
+
+.hero-actions {
   display: flex;
   gap: 1rem;
-}
-.floating-elements .element {
-  font-size: 2rem;
-  animation: float 3s ease-in-out infinite alternate;
-}
-@keyframes float {
-  from { transform: translateY(0); }
-  to { transform: translateY(-15px); }
-}
-
-/* Features Section */
-.features {
-  padding: 4rem 2rem;
-  background: #ffffffdd;
-  border-radius: 20px;
-  margin: 2rem;
-}
-.features h2 {
-  text-align: center;
-  font-size: 2rem;
-  margin-bottom: 2rem;
-}
-.features-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 1.5rem;
-}
-.feature-card {
-  background: #ffffff;
-  border-radius: 15px;
-  padding: 2rem 1.5rem;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  text-align: center;
-}
-.feature-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 12px 25px rgba(0,0,0,0.15);
-}
-.feature-icon {
-  font-size: 2.5rem;
-  margin-bottom: 1rem;
-}
-
-/* Stats Section */
-.stats {
-  padding: 4rem 2rem;
-}
-.stats h2 {
-  text-align: center;
-  font-size: 2rem;
   margin-bottom: 3rem;
-}
-.stats-grid {
-  display: flex;
-  justify-content: center;
-  gap: 2rem;
   flex-wrap: wrap;
 }
-.stat-card {
-  background: #ffffff;
-  border-radius: 15px;
-  padding: 2rem 3rem;
-  text-align: center;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-.stat-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 12px 25px rgba(0,0,0,0.15);
-}
-.stat-card h3 {
-  font-size: 2rem;
-  color: #26c6da;
-  margin-bottom: 0.5rem;
+
+/* Buttons */
+.btn,
+a {
+  text-decoration: none;
+  /* removes underline */
+  transition: all 0.3s ease;
 }
 
-/* CTA Section */
-.cta {
-  text-align: center;
-  padding: 4rem 2rem;
-  background: #26c6da;
-  color: white;
-  border-radius: 20px;
-  margin: 2rem;
+.btn-lg {
+  padding: 1rem 2rem;
+  font-size: 1rem;
 }
-.cta h2 {
+
+.btn-primary {
+  background: var(--primary);
+  color: white;
+  border: none;
+}
+
+.btn-outline {
+  background: transparent;
+  border: 2px solid var(--primary);
+  color: var(--primary);
+}
+
+.hero-stats {
+  display: flex;
+  gap: 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--gray-200);
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+}
+
+.stat-value {
   font-size: 2rem;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 0.25rem;
+}
+
+.stat-label {
+  font-size: 0.875rem;
+  color: var(--gray-600);
+}
+
+.hero-visual {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 500px;
+}
+
+.visual-card {
+  position: absolute;
+  background: white;
+  border-radius: var(--radius-xl);
+  padding: 1.5rem;
+  box-shadow: var(--shadow-xl);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  border: 1px solid var(--gray-300);
+  transition: all 0.3s ease;
+  animation: float 3s ease-in-out infinite;
+}
+
+.visual-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--primary);
+}
+
+.card-1 {
+  top: 20%;
+  left: 10%;
+  animation-delay: 0s;
+}
+
+.card-2 {
+  bottom: 20%;
+  right: 10%;
+  animation-delay: 1.5s;
+}
+
+.card-icon {
+  width: 48px;
+  height: 48px;
+  background: var(--gray-100);
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary);
+}
+
+.card-title {
+  font-size: 0.875rem;
+  color: var(--gray-600);
+  margin-bottom: 0.25rem;
+}
+
+.card-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--gray-900);
+}
+
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+/* ---------------- Features Section ---------------- */
+.features {
+  padding: 6rem 2rem;
+  background: white;
+}
+
+.section-header {
+  text-align: center;
+  max-width: 700px;
+  margin: 0 auto 4rem;
+}
+
+.section-header h2 {
+  font-size: 2.5rem;
   margin-bottom: 1rem;
+  font-weight: 700;
 }
-.cta p {
-  font-size: 1.1rem;
-  margin-bottom: 2rem;
+
+.section-header p {
+  font-size: 1.125rem;
+  color: var(--gray-600);
 }
-.btn.primary {
-  background-color: #00acc1;
-  color: white;
-  padding: 0.75rem 2rem;
-  border-radius: 10px;
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.feature-card {
+  padding: 2rem;
+  border-radius: var(--radius-xl);
+  background: var(--gray-50);
+  border: 1px solid var(--gray-300);
+  transition: all var(--transition-base);
+}
+
+.feature-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--primary);
+}
+
+.feature-icon {
+  width: 56px;
+  height: 56px;
+  background: white;
+  border-radius: var(--radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary);
+  margin-bottom: 1.5rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.feature-card h3 {
+  font-size: 1.25rem;
+  margin-bottom: 0.75rem;
   font-weight: 600;
 }
-.btn.secondary {
-  background-color: #ffffff;
-  color: #00acc1;
-  border: 2px solid #00acc1;
+
+.feature-card p {
+  color: var(--gray-600);
+  line-height: 1.6;
 }
-.btn.large {
-  font-size: 1.2rem;
-  padding: 1rem 2.5rem;
+
+/* ---------------- Testimonials ---------------- */
+.testimonials {
+  padding: 6rem 2rem;
+  background: var(--gray-50);
 }
-.btn:hover {
+
+.testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.testimonial-card {
+  background: white;
+  padding: 2rem;
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--gray-300);
+  transition: all 0.3s ease;
+}
+
+.testimonial-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--primary);
+}
+
+.testimonial-rating {
+  display: flex;
+  gap: 0.25rem;
+  margin-bottom: 1rem;
+  color: var(--accent);
+}
+
+.testimonial-text {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--gray-700);
+  margin-bottom: 1.5rem;
+}
+
+.testimonial-author {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.author-avatar {
+  width: 48px;
+  height: 48px;
+  background: var(--primary);
+  color: white;
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.875rem;
+}
+
+.author-name {
+  font-weight: 600;
+  color: var(--gray-900);
+  margin-bottom: 0.25rem;
+}
+
+.author-role {
+  font-size: 0.875rem;
+  color: var(--gray-500);
+}
+
+/* ---------------- CTA Section ---------------- */
+.cta {
+  padding: 6rem 2rem;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+}
+
+.cta-content {
+  max-width: 700px;
+  margin: 0 auto;
+  text-align: center;
+  color: white;
+}
+
+.cta-content h2 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  font-weight: 700;
+  color: white;
+}
+
+.cta-content p {
+  font-size: 1.125rem;
+  margin-bottom: 2rem;
   opacity: 0.9;
 }
 
-/* Responsive */
-@media (max-width: 768px) {
+.cta-content .btn {
+  background: white;
+  color: var(--primary);
+}
+
+.cta-content .btn:hover {
+  background: var(--gray-100);
+  transform: translateY(-2px);
+}
+
+/* ---------------- Responsive ---------------- */
+@media (max-width: 1024px) {
   .hero {
-    flex-direction: column-reverse;
-    text-align: center;
+    grid-template-columns: 1fr;
+    padding: 4rem 2rem;
   }
-  .actions .btn {
-    margin: 0.5rem 0;
+
+  .hero-visual {
+    min-height: 400px;
+  }
+
+  .hero-title {
+    font-size: 2.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-title {
+    font-size: 2rem;
+  }
+
+  .hero-stats {
+    gap: 2rem;
+  }
+
+  .section-header h2 {
+    font-size: 2rem;
+  }
+
+  .cta-content h2 {
+    font-size: 2rem;
+  }
+
+  .testimonials-grid {
+    grid-template-columns: 1fr;
   }
 }
 </style>

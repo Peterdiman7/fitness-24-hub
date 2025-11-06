@@ -18,7 +18,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue"
+import { ref, computed } from "vue"
+import { useRouter } from "vue-router"
+
+const router = useRouter()
 
 interface Plan {
   id: number
@@ -28,7 +31,8 @@ interface Plan {
   bestValue?: boolean
 }
 
-const plans = ref<Plan[]>([
+// ✅ Global default plans
+const globalPlans: Plan[] = [
   {
     id: 1,
     name: "1 Day Access",
@@ -49,33 +53,97 @@ const plans = ref<Plan[]>([
   },
   {
     id: 4,
-    name: "20 Days Access",
-    price: "$24.95 every 12 days",
-    features: ["Full library access", "HD streaming", "Cancel anytime"],
-  },
-  {
-    id: 5,
     name: "15 Days Access",
     price: "$29.95 every 15 days",
     features: ["Full library access", "HD streaming", "Cancel anytime"],
     bestValue: true,
   },
   {
-    id: 6,
+    id: 5,
     name: "20 Days Access",
     price: "$39.95 every 20 days",
     features: ["Full library access", "HD streaming", "Cancel anytime"],
   },
   {
-    id: 7,
+    id: 6,
     name: "30 Days Access",
     price: "$49.95 per month",
     features: ["Full library access", "HD streaming", "Cancel anytime"],
   },
-])
+]
+
+// ✅ Localized pricing per subdomain
+const localPricing: Record<string, Plan[]> = {
+  ku: [
+    {
+      id: 101,
+      name: "Daily Access",
+      price: "0.100 KWD / day",
+      features: ["Full library access", "HD streaming", "Works on mobile & web"],
+    },
+    {
+      id: 102,
+      name: "Weekly Access",
+      price: "0.700 KWD / week",
+      features: ["Full library access", "Offline access", "Priority support"],
+      bestValue: true,
+    },
+  ],
+  ksa: [
+    {
+      id: 201,
+      name: "Daily Access",
+      price: "1.50 SAR / day",
+      features: ["Full library access", "HD streaming", "Works on all devices"],
+    },
+  ],
+  iq: [
+    {
+      id: 301,
+      name: "Daily Access",
+      price: "0.240 IQD / day",
+      features: ["Full library access", "HD streaming", "Cancel anytime"],
+    },
+    {
+      id: 302,
+      name: "Weekly Access",
+      price: "0.700 IQD / week",
+      features: ["Full library access", "Offline access", "Priority support"],
+      bestValue: true,
+    },
+  ],
+  su: [
+    {
+      id: 401,
+      name: "Daily Access",
+      price: "600 SDP / day",
+      features: ["Full library access", "HD streaming", "Basic support"],
+    },
+    {
+      id: 402,
+      name: "Weekly Access",
+      price: "1500 SDP / week",
+      features: ["Full library access", "Offline access", "Priority support"],
+      bestValue: true,
+    },
+    {
+      id: 403,
+      name: "Monthly Access",
+      price: "3600 SDP / month",
+      features: ["Full library access", "Offline access", "VIP support", "Multi-device"],
+    },
+  ],
+}
+
+// ✅ Detect subdomain
+const subdomain = window.location.hostname.split(".")[0]
+const isLocal = ["ku", "ksa", "iq", "su"].includes(subdomain)
+
+// ✅ Computed plans: local if available, else global
+const plans = computed(() => (isLocal ? localPricing[subdomain] : globalPlans))
 
 const selectPlan = (plan: Plan) => {
-  alert(`You selected the ${plan.name} plan!`)
+  router.push({ name: "checkout", query: { plan: plan.id, region: isLocal ? subdomain : "global" } })
 }
 </script>
 

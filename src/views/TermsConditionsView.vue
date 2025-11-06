@@ -11,7 +11,7 @@
         <p>
           Fitness24Hub is operated by <strong>Nexera Media Group LTD</strong>.
           We provide fitness inspiration, workout plans, nutrition guides, and related content to our community.
-          Contact us anytime at <a href="mailto:legal@fitness24hub.com">legal@fitness24hub.com</a>.
+          Contact us anytime at <a href="mailto:help@fitness24hub.com">help@fitness24hub.com</a>.
         </p>
 
         <h3>2. Agreement to Terms</h3>
