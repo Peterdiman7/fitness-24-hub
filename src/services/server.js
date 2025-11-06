@@ -70,6 +70,21 @@ app.get("/categories", async (req, res) => {
     }
 })
 
+// ---- GET WORKOUTS BY CATEGORY ----
+app.get("/categories/:categoryId/workouts", async (req, res) => {
+    try {
+        const [workouts] = await pool.execute(
+            "SELECT id, title, description, duration, level, image_url FROM workouts WHERE category_id = ? ORDER BY id ASC",
+            [req.params.categoryId]
+        );
+        res.json(workouts);
+    } catch (err) {
+        console.error("GET WORKOUTS BY CATEGORY ERROR:", err);
+        res.status(500).json({ error: "Database error" });
+    }
+});
+
+// ---- GET SINGLE WORKOUT ----
 app.get("/workouts/:id", async (req, res) => {
     try {
         const [[workout]] = await pool.execute(
@@ -80,7 +95,7 @@ app.get("/workouts/:id", async (req, res) => {
         if (!workout) return res.status(404).json({ error: "Not found" });
 
         const [steps] = await pool.execute(
-            "SELECT step_number, text FROM workout_instructions WHERE workout_id = ? ORDER BY step_number",
+            "SELECT step_number, instruction FROM workout_instructions WHERE workout_id = ? ORDER BY step_number",
             [req.params.id]
         );
 
@@ -90,6 +105,80 @@ app.get("/workouts/:id", async (req, res) => {
     } catch (err) {
         console.error("GET WORKOUT ERROR:", err);
         res.status(500).json({ error: "Server error" });
+    }
+})
+
+// ---- GET NUTRITION CATEGORIES ----
+app.get("/nutrition/categories", async (req, res) => {
+    try {
+        const [rows] = await pool.execute(
+            "SELECT id, name, description, image_url FROM nutrition_categories ORDER BY id ASC"
+        )
+        res.json(rows)
+    } catch (err) {
+        console.error("GET NUTRITION CATEGORIES ERROR:", err)
+        res.status(500).json({ error: "Database error" })
+    }
+})
+
+// ---- GET SINGLE NUTRITION CATEGORY ----
+app.get("/nutrition/categories/:id", async (req, res) => {
+    try {
+        const [[category]] = await pool.execute(
+            "SELECT id, name, description, image_url FROM nutrition_categories WHERE id = ?",
+            [req.params.id]
+        )
+
+        if (!category) return res.status(404).json({ error: "Category not found" })
+
+        res.json(category)
+    } catch (err) {
+        console.error("GET NUTRITION CATEGORY ERROR:", err)
+        res.status(500).json({ error: "Database error" })
+    }
+})
+
+// ---- GET RECIPES BY NUTRITION CATEGORY ----
+app.get("/nutrition/categories/:categoryId/recipes", async (req, res) => {
+    try {
+        const [recipes] = await pool.execute(
+            "SELECT id, title, description, cook_time, calories, image_url FROM recipes WHERE category_id = ? ORDER BY id ASC",
+            [req.params.categoryId]
+        )
+        res.json(recipes)
+    } catch (err) {
+        console.error("GET RECIPES BY CATEGORY ERROR:", err)
+        res.status(500).json({ error: "Database error" })
+    }
+})
+
+// ---- GET SINGLE RECIPE WITH INGREDIENTS AND INSTRUCTIONS ----
+app.get("/recipes/:id", async (req, res) => {
+    try {
+        const [[recipe]] = await pool.execute(
+            "SELECT * FROM recipes WHERE id = ?",
+            [req.params.id]
+        )
+
+        if (!recipe) return res.status(404).json({ error: "Recipe not found" })
+
+        const [ingredients] = await pool.execute(
+            "SELECT ingredient FROM recipe_ingredients WHERE recipe_id = ? ORDER BY id ASC",
+            [req.params.id]
+        )
+
+        const [instructions] = await pool.execute(
+            "SELECT step_number, instruction FROM recipe_instructions WHERE recipe_id = ? ORDER BY step_number ASC",
+            [req.params.id]
+        )
+
+        recipe.ingredients = ingredients
+        recipe.instructions = instructions
+
+        res.json(recipe)
+    } catch (err) {
+        console.error("GET RECIPE ERROR:", err)
+        res.status(500).json({ error: "Server error" })
     }
 })
 

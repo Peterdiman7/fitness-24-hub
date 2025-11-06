@@ -1,22 +1,34 @@
 <template>
   <div class="nutrition-list container">
-    <h1 class="section-title">Nutrition Plans & Tips</h1>
-    <div class="grid">
-      <div v-for="plan in nutritionPlans" :key="plan.id" class="nutrition-card">
-        <RouterLink :to="`/nutrition/${plan.id}`" class="card-link">
+    <h1 class="section-title">Nutrition Plans & Recipes</h1>
+    <p class="subtitle">Discover healthy recipes organized by category</p>
+
+    <div v-if="loading" class="loading-container">
+      <div class="loading-spinner"></div>
+      <p>Loading nutrition categories...</p>
+    </div>
+
+    <div v-else-if="error" class="error-message">
+      <p>{{ error }}</p>
+      <button @click="fetchCategories" class="btn-retry">Try Again</button>
+    </div>
+
+    <div v-else class="grid">
+      <div v-for="category in nutritionCategories" :key="category.id" class="nutrition-card">
+        <RouterLink :to="`/nutrition/${category.id}/recipes`" class="card-link">
           <!-- Card Image -->
           <div class="card-image">
-            <img :src="plan.image || '/placeholder.jpg'" :alt="plan.title" />
+            <img :src="category.image_url || '/placeholder.jpg'" :alt="category.name" />
           </div>
 
-          <!-- Card Header -->
-          <div class="card-header">
-            <span class="icon">{{ plan.icon }}</span>
-            <h3>{{ plan.title }}</h3>
-          </div>
+          <div class="card-content">
+            <h3>{{ category.name }}</h3>
+            <p>{{ category.description }}</p>
 
-          <!-- Description -->
-          <p>{{ plan.description }}</p>
+            <div class="view-btn">
+              View Recipes →
+            </div>
+          </div>
         </RouterLink>
       </div>
     </div>
@@ -24,45 +36,41 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, onMounted } from "vue"
+import { RouterLink } from "vue-router"
 
-const nutritionPlans = ref([
-  {
-    id: 1,
-    title: "High Protein",
-    description: "Boost muscle growth with protein-rich meals.",
-    icon: "🥩",
-    image: "https://content.health.harvard.edu/wp-content/uploads/2024/01/28e8e464-f55e-4b32-9bab-dc990d8cc927.jpg"
-  },
-  {
-    id: 2,
-    title: "Low Carb",
-    description: "Burn fat with low carbohydrate meal plans.",
-    icon: "🥗",
-    image: "https://www.dietdoctor.com/wp-content/uploads/2019/01/Canadian-doctors-rock-awareness-raising-about-low-carb-eating.jpg"
-  },
-  {
-    id: 3,
-    title: "Vegan",
-    description: "Plant-based meals for energy and wellness.",
-    icon: "🌱",
-    image: "https://cdn.prod.website-files.com/66bdfc87da2d5175e8c7dd54/66cc6a2cf0ed1150c428df3e_vegan.jpeg"
-  },
-  {
-    id: 4,
-    title: "Balanced Diet",
-    description: "Well-rounded meals for daily energy.",
-    icon: "🍎",
-    image: "https://www.stormfitnessacademy.co.uk/wp-content/uploads/2020/03/Balanced-diet-scaled.jpg"
-  },
-  {
-    id: 5,
-    title: "Pre-Workout Snacks",
-    description: "Quick energy snacks to fuel workouts.",
-    icon: "🍌",
-    image: "https://www.realsimple.com/thmb/WcYhugxkGolnVlCWsBB-J0eAf0Q=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/pre-workout-snacks-energy-GettyImages-1184896149-33913bc249334352952998e32177677d.jpg"
-  },
-])
+interface NutritionCategory {
+  id: number
+  name: string
+  description: string
+  image_url: string
+}
+
+const nutritionCategories = ref<NutritionCategory[]>([])
+const loading = ref(true)
+const error = ref("")
+
+const fetchCategories = async () => {
+  loading.value = true
+  error.value = ""
+
+  try {
+    const res = await fetch("http://localhost:9102/nutrition/categories", {
+      credentials: "include"
+    })
+
+    if (!res.ok) throw new Error("Failed to fetch nutrition categories")
+
+    nutritionCategories.value = await res.json()
+  } catch (err) {
+    console.error("Error loading nutrition categories:", err)
+    error.value = "Failed to load nutrition categories. Please try again."
+  } finally {
+    loading.value = false
+  }
+}
+
+onMounted(fetchCategories)
 </script>
 
 <style scoped>
@@ -85,15 +93,69 @@ const nutritionPlans = ref([
 /* Title */
 .section-title {
   font-size: 2.5rem;
-  margin-bottom: 2.5rem;
+  margin-bottom: 1rem;
   font-weight: 700;
   color: var(--primary);
+}
+
+.subtitle {
+  font-size: 1.125rem;
+  color: var(--gray-600);
+  margin-bottom: 3rem;
+}
+
+/* Loading */
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  gap: 1rem;
+}
+
+.loading-spinner {
+  width: 50px;
+  height: 50px;
+  border: 4px solid #e5e7eb;
+  border-top-color: var(--primary);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Error */
+.error-message {
+  text-align: center;
+  padding: 2rem;
+  color: #ef4444;
+}
+
+.btn-retry {
+  margin-top: 1rem;
+  padding: 0.75rem 1.5rem;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.3s ease;
+}
+
+.btn-retry:hover {
+  background: var(--primary-dark);
 }
 
 /* Grid */
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 2rem;
 }
 
@@ -104,6 +166,7 @@ const nutritionPlans = ref([
   border-radius: 20px;
   box-shadow: var(--shadow-md);
   transition: all 0.3s ease;
+  overflow: hidden;
 }
 
 .nutrition-card:hover {
@@ -117,16 +180,14 @@ const nutritionPlans = ref([
   text-decoration: none;
   color: inherit;
   display: block;
-  padding: 1.5rem;
+  height: 100%;
 }
 
 /* Card Image */
 .card-image {
   width: 100%;
-  height: 160px;
-  border-radius: 15px;
+  height: 200px;
   overflow: hidden;
-  margin-bottom: 1rem;
 }
 
 .card-image img {
@@ -134,32 +195,44 @@ const nutritionPlans = ref([
   height: 100%;
   object-fit: cover;
   display: block;
+  transition: transform 0.3s ease;
 }
 
-/* Card Header */
-.card-header {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.nutrition-card:hover .card-image img {
+  transform: scale(1.05);
+}
+
+/* Card Content */
+.card-content {
+  padding: 1.5rem;
+}
+
+.card-content h3 {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--primary-dark);
   margin-bottom: 0.75rem;
 }
 
-.icon {
-  font-size: 2rem;
-  margin-right: 0.6rem;
-}
-
-.card-header h3 {
-  font-size: 1.3rem;
-  font-weight: 600;
-  color: var(--primary-dark);
-}
-
-/* Text */
-.nutrition-card p {
+.card-content p {
   font-size: 1rem;
   line-height: 1.6;
   color: var(--gray-600);
+  margin-bottom: 1.5rem;
+}
+
+.view-btn {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  background: var(--primary);
+  color: white;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: background 0.3s ease;
+}
+
+.nutrition-card:hover .view-btn {
+  background: var(--primary-dark);
 }
 
 /* Responsive */

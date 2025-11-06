@@ -207,6 +207,19 @@ const plans: Plan[] = [
     price: "$49.95",
     features: ["Full library access", "HD streaming", "Cancel anytime"],
   },
+  {
+    id: 101,
+    name: "Daily Access",
+    price: "0.100 KWD / day",
+    features: ["Full library access", "HD streaming", "Works on mobile & web"],
+  },
+  {
+    id: 102,
+    name: "Weekly Access",
+    price: "0.700 KWD / week",
+    features: ["Full library access", "Offline access", "Priority support"],
+    bestValue: true,
+  },
 ]
 
 const selectedPlan = ref<Plan>(plans[4]) // Default to best value
