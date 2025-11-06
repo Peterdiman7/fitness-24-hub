@@ -38,4 +38,4 @@ src/generated/**
 src/**/*.bak
 .env
 
-src/scripts/**
+src/scripts/
